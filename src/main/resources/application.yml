@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: todo-api-gateway
+
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            # auth service
+            - id: todo-auth-and-user-preferences-service
+              uri: lb://todo-auth-and-user-preferences-service
+              predicates:
+                - Path=api/v1/auth/**
+            # tasks service
+            - id: todo-task-service
+              uri: lb://todo-task-service
+              predicates:
+                - Path=api/v1/task/**
+            # email service : TODO: remove in PRODUCTION
+            - id: todo-email-service
+              uri: lb://todo-email-service
+              predicates:
+                - Path=api/v1/email/**
+            # ai service
+            - id: todo-ai-service
+              uri: lb://todo-ai-service
+              predicates:
+                - Path=api/v1/ai/**
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka
