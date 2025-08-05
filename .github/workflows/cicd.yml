@@ -83,3 +83,4 @@ jobs:
           IMAGE_NAME=dilpreetwk/todo-api-gateway
           docker build -t $IMAGE_NAME:$VERSION .
           docker push $IMAGE_NAME:$VERSION
+
